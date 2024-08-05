@@ -1,1 +1,1 @@
-# cp-chort6-group1
+# CapstoneProject-DevOps-CICDpipeline Group 2
