@@ -1,8 +1,8 @@
 # CapstoneProject-DevOps-CICDpipeline Group 2
 
-# E-commerce Company—Company background
+# E-commerce Company— BerryFresh
 
-BerryFresh: Your Online Destination for Premium Strawberries From Dandong. With the 
+Berryfresh is Your Online Destination for Premium Strawberries From Dandong. With the 
 inherent advantages of being located in an internationally recognized high-quality fruit zone at a 40° north latitude, Dandong 99 strawberries are perfect in color, flavor, and taste, and are loved by consumers locally and abroad. Now we are bringing this to Singapore. 
 
 Sourced from local farmers in Dandong, our strawberries are celebrated for their exceptional sweetness and juicy texture. Grown in the region’s ideal climate and fertile soil, these strawberries are harvested at peak ripeness, ensuring you enjoy the freshest and tastiest fruit.
