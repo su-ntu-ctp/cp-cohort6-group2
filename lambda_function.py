@@ -9,11 +9,16 @@ dynamodb = boto3.client('dynamodb')
 table_name = os.environ['DYNAMODB_TABLE']
 
 def lambda_handler(event, context):
-    body = json.loads(event.get('body', '{}'))
+    json_payload = context.body
+    print(json_payload)
+    payload = json.loads(json_payload)
+    print(payload)
+
     # Example: Get order details from the event and store it in DynamoDB
-    order_id = body.get('order_id')
-    fruit = body.get('fruit')
-    quantity = body.get('quantity')
+    order_id = payload['order_id']
+    print(order_id)
+    fruit = payload['fruit']
+    quantity = payload['quantity']
     
     # Define the item to be stored in DynamoDB
     item = {
