@@ -11,4 +11,4 @@ Sourced from local farmers in Dandong, our strawberries are celebrated for their
 
 
 ## Cloud Architecture:
-<img width="367" alt="Cloud Architecture" src="https://github.com/user-attachments/assets/c13e8050-823d-4797-a1da-11d1016ef693">
+<img width="339" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/023f0d54-6692-4e53-90cf-e5fe8a887c7c">
