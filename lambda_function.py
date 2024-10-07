@@ -9,13 +9,13 @@ dynamodb = boto3.client('dynamodb')
 table_name = os.environ['DYNAMODB_TABLE']
 
 def lambda_handler(event, context):
-    # Get the body from the event object, which API Gateway passes
-    json_payload = event.get('body', '{}')  # Ensure default to '{}' if body is missing
+    # Get the body from the event object
+    json_payload = event.get('body', '{}')  # Ensure default to '{}' if the body is missing or empty
     print("Raw payload:", json_payload)
-    
+
     # Load the body into a dictionary
     try:
-        payload = json.loads(json_payload)
+        payload = json.loads(json_payload)  # Convert the JSON string into a dictionary
     except json.JSONDecodeError as e:
         return {
             'statusCode': 400,
@@ -60,4 +60,5 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(f"Order {order_id} processed successfully!")
     }
+
 
