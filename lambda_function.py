@@ -9,16 +9,33 @@ dynamodb = boto3.client('dynamodb')
 table_name = os.environ['DYNAMODB_TABLE']
 
 def lambda_handler(event, context):
-    json_payload = context.body
-    print(json_payload)
-    payload = json.loads(json_payload)
-    print(payload)
+    # Get the body from the event object
+    json_payload = event.get('body', '{}')  # Default to '{}' if body is missing
+    print("Raw payload:", json_payload)
+    
+    # Load the body into a dictionary
+    try:
+        payload = json.loads(json_payload)
+    except json.JSONDecodeError as e:
+        return {
+            'statusCode': 400,
+            'body': json.dumps(f"Invalid JSON: {str(e)}")
+        }
 
-    # Example: Get order details from the event and store it in DynamoDB
-    order_id = payload['order_id']
-    print(order_id)
-    fruit = payload['fruit']
-    quantity = payload['quantity']
+    print("Parsed payload:", payload)
+
+    # Extract order details from the payload
+    order_id = payload.get('order_id')
+    fruit = payload.get('fruit')
+    quantity = payload.get('quantity')
+    
+    if not order_id or not fruit or not quantity:
+        return {
+            'statusCode': 400,
+            'body': json.dumps("Missing order_id, fruit, or quantity")
+        }
+
+    print(f"Order ID: {order_id}, Fruit: {fruit}, Quantity: {quantity}")
     
     # Define the item to be stored in DynamoDB
     item = {
@@ -28,9 +45,18 @@ def lambda_handler(event, context):
     }
 
     # Put the item in the DynamoDB table
-    dynamodb.put_item(TableName=table_name, Item=item)
+    try:
+        dynamodb.put_item(TableName=table_name, Item=item)
+        print(f"Order {order_id} stored successfully in DynamoDB")
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f"Failed to store order in DynamoDB: {str(e)}")
+        }
 
+    # Return success response
     return {
         'statusCode': 200,
         'body': json.dumps(f"Order {order_id} processed successfully!")
     }
+
