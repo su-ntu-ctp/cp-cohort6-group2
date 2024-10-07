@@ -9,8 +9,8 @@ dynamodb = boto3.client('dynamodb')
 table_name = os.environ['DYNAMODB_TABLE']
 
 def lambda_handler(event, context):
-    # Get the body from the event object
-    json_payload = event.get('body', '{}')  # Default to '{}' if body is missing
+    # Get the body from the event object, which API Gateway passes
+    json_payload = event.get('body', '{}')  # Ensure default to '{}' if body is missing
     print("Raw payload:", json_payload)
     
     # Load the body into a dictionary
@@ -29,6 +29,7 @@ def lambda_handler(event, context):
     fruit = payload.get('fruit')
     quantity = payload.get('quantity')
     
+    # Check for missing fields and return a 400 error if any are missing
     if not order_id or not fruit or not quantity:
         return {
             'statusCode': 400,
