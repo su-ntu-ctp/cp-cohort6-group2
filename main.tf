@@ -140,9 +140,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = var.acm_certificate_arn
-    ssl_support_method  = "sni-only"
-  }
+  cloudfront_default_certificate = true
+}
 
   restrictions {
     geo_restriction {
