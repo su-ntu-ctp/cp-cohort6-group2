@@ -107,25 +107,20 @@ resource "aws_lambda_permission" "api_gateway_permission" {
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
 
-# Cloudfront from this line onwards
-# resource "aws_s3_bucket" "static_web" {
-
-#   # bucket        = "${var.env}-jaz-spa-cf-bkt"
-#   bucket = "my-fruit-shop-static-site"
-#   force_destroy = true
-# }
-
+# S3 Bucket Policy to Allow CloudFront Access
 resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
-  bucket = aws_s3_bucket.static_web.id
+  bucket = aws_s3_bucket.static_site.id
+
   policy = data.aws_iam_policy_document.default.json
 }
 
+# CloudFront Distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
-  
+
   origin {
-    domain_name              = aws_s3_bucket.static_web.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.static_site.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
-    origin_id                = "origin-${aws_s3_bucket.static_web.id}"
+    origin_id                = "origin-${aws_s3_bucket.static_site.id}"
   }
 
   aliases = var.aliases
@@ -137,10 +132,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_root_object = "index.html"
 
   default_cache_behavior {
-    cache_policy_id        = data.aws_cloudfront_cache_policy.example.id
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"  # AWS managed caching policy
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "origin-${aws_s3_bucket.static_web.id}"
+    target_origin_id       = "origin-${aws_s3_bucket.static_site.id}"
     viewer_protocol_policy = "allow-all"
   }
 
@@ -157,11 +152,33 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 
+
+
+# CloudFront Origin Access Control
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name                              = "${aws_s3_bucket.static_web.id}-oac-${var.env}"
+  name                              = "${aws_s3_bucket.static_site.id}-oac-${var.env}"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
+}
+
+# IAM Policy Document for S3 CloudFront Access
+data "aws_iam_policy_document" "default" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.static_site.arn}/*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.s3_distribution.arn]
+    }
+  }
 }
 
 
@@ -322,7 +339,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 
 #     forwarded_values {
 #       query_string = false
-      
+
 #       cookies {
 #         forward = "none"  # No cookies are forwarded
 #       }
