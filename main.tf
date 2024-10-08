@@ -108,12 +108,12 @@ resource "aws_lambda_permission" "api_gateway_permission" {
 }
 
 # Cloudfront from this line onwards
-resource "aws_s3_bucket" "static_web" {
+# resource "aws_s3_bucket" "static_web" {
 
-  # bucket        = "${var.env}-jaz-spa-cf-bkt"
-  bucket = "my-fruit-shop-static-site"
-  force_destroy = true
-}
+#   # bucket        = "${var.env}-jaz-spa-cf-bkt"
+#   bucket = "my-fruit-shop-static-site"
+#   force_destroy = true
+# }
 
 resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
   bucket = aws_s3_bucket.static_web.id
@@ -163,3 +163,4 @@ resource "aws_cloudfront_origin_access_control" "oac" {
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
+
