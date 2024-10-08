@@ -62,3 +62,6 @@ def lambda_handler(event, context):
         }
 
 
+# curl -X POST https://2a22v3sh3i.execute-api.us-east-1.amazonaws.com/prod/orders \
+#      -H "Content-Type: application/json" \
+#      -d '{"order_id": "123", "fruit": "apple", "quantity": 11}'
