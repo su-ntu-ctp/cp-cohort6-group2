@@ -1,6 +1,6 @@
 locals {
-  env           = "prd"
-  domain_prefix = "jaz-cloudfront"
+  env           = "dev"
+  domain_prefix = "myfruitshop"
   zone_name     = "sctp-sandbox.com"
 }
 
@@ -33,7 +33,7 @@ module "acm" {
   }
 
   domain_name       = "${local.domain_prefix}-${local.env}.${local.zone_name}"
-  zone_id           = data.aws_route53_zone.prod.zone_id
+  zone_id           = data.aws_route53_zone.nonprod.zone_id
   validation_method = "DNS"
 }
 
