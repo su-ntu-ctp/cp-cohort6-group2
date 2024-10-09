@@ -1,53 +1,116 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Something went wrong :(</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rare Strawberry Fruit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/strawberrybg.jpg'); /* Replace with your image URL */
+            background-size: cover; /* Cover the entire viewport */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            background-color: rgba(255, 255, 255, 0.7); /* White background with 70% opacity */
+            padding: 10px;
+            border-radius: 5px; /* Optional: Add rounded corners */
+            color: #e63946;
+        }
+        .product {
+            margin: 20px 0;
+        }
+        .product img {
+            width: 300px;
+            height: auto;
+        }
+        .order-form {
+            margin-top: 20px;
+        }
+        input[type="email"], input[type="number"] {
+            padding: 10px;
+            width: 250px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #d62839;
+        }
+    </style>
+</head>
+<body>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    <h1>Rare Strawberry Fruit</h1>
+    <div class="product">
+        <img src="images/strawberry.jpeg" alt="Rare Strawberry Fruit">
+        <p>Experience the unique taste of our rare strawberry fruit. Limited stock available!</p>
+        <p>Price: $19.99</p>
+    </div>
 
-				<!-- Header -->
-					<header id="header">
-						<div class="logo">
-							<span class="icon fa-diamond"></span>
-						</div>
-						<div class="content">
-							<div class="inner">
-								<h1>404</h1>
-								<p>
-									Page not found!
-								</p>
-							</div>
-						</div>
-					</header>
+    <div class="order-form">
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <input type="number" id="quantity" placeholder="Enter quantity" required min="1">
+        <button id="orderButton">Order Now</button>
+    </div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
+    <script>
+        // Function to generate a random order_id
+        function generateOrderId() {
+            return 'ORD-' + Math.floor(Math.random() * 1000000); // Generates a random 6-digit order ID
+        }
 
-			</div>
+        document.getElementById('orderButton').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const quantity = Number(document.getElementById('quantity').value); // Convert quantity to a number
+            const order_id = generateOrderId(); // Auto-generate order_id
+            const fruit = "strawberry"; // Hardcoded fruit
 
-		<!-- BG -->
-			<div id="bg"></div>
+            if (!email || !quantity || quantity <= 0) {
+                alert('Please enter a valid email and quantity.');
+                return;
+            }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+            // Replace with your AWS API Gateway endpoint
+            const apiUrl = 'https://2a22v3sh3i.execute-api.us-east-1.amazonaws.com/prod/orders';
 
-	</body>
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    order_id: order_id, // Matches order_id from curl example
+                    fruit: fruit,        // Matches fruit from curl example
+                    quantity: quantity,  // Matches quantity from curl example
+                    email: email         // This is extra from the form input
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert(`Order placed successfully! Your order ID is: ${order_id}`);
+                } else {
+                    alert('Failed to place order. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+
+</body>
 </html>
