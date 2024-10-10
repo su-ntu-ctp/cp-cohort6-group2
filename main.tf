@@ -48,7 +48,49 @@ resource "aws_iam_role" "lambda_exec_role" {
 EOF
 }
 
-# Lambda Function
+# IAM Policy for Lambda to access SES
+resource "aws_iam_policy" "lambda_ses_policy" {
+  name = "lambda_ses_policy"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "ses:SendEmail",
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+# Attach SES policy to Lambda execution role
+resource "aws_iam_role_policy_attachment" "lambda_exec_role_ses" {
+  role       = aws_iam_role.lambda_exec_role.name
+  policy_arn = aws_iam_policy.lambda_ses_policy.arn
+}
+
+# Lambda Function to send email notifications
+resource "aws_lambda_function" "send_email" {
+  function_name = "send_email_notification"
+  handler       = "email_lambda.lambda_handler"
+  runtime       = "python3.8"
+
+  filename = "send_email.zip" # Prepackaged Lambda code for sending email
+  role     = aws_iam_role.lambda_exec_role.arn
+  timeout  = 10
+
+  environment {
+    variables = {
+      EMAIL_SENDER    = "xin_wang_xin@hotmail.com" # Replace with a verified SES email
+      EMAIL_RECIPIENT = "xin_wang_xin@hotmail.com"            # The email recipient
+    }
+  }
+}
+
+# Lambda Function for processing orders
 resource "aws_lambda_function" "process_order" {
   function_name = "process_order"
   handler       = "lambda_function.lambda_handler"
@@ -60,7 +102,8 @@ resource "aws_lambda_function" "process_order" {
 
   environment {
     variables = {
-      DYNAMODB_TABLE = aws_dynamodb_table.fruit_orders.name
+      DYNAMODB_TABLE   = aws_dynamodb_table.fruit_orders.name
+      EMAIL_LAMBDA_ARN = aws_lambda_function.send_email.arn # Add the email Lambda ARN
     }
   }
 }
@@ -116,23 +159,20 @@ resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
 
 # CloudFront Distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
-
   origin {
     domain_name              = aws_s3_bucket.static_site.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
     origin_id                = "origin-${aws_s3_bucket.static_site.id}"
   }
 
-  aliases = var.aliases
-
-  web_acl_id = var.web_acl_id
-
+  aliases             = var.aliases
+  web_acl_id          = var.web_acl_id
   enabled             = true
   comment             = "Static Website using S3 and Cloudfront OAC in ${var.env} environment"
   default_root_object = "index.html"
 
   default_cache_behavior {
-    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"  # AWS managed caching policy
+    cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "origin-${aws_s3_bucket.static_site.id}"
@@ -140,8 +180,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-  cloudfront_default_certificate = true
-}
+    cloudfront_default_certificate = true
+  }
 
   restrictions {
     geo_restriction {
@@ -150,8 +190,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
   }
 }
-
-
 
 # CloudFront Origin Access Control
 resource "aws_cloudfront_origin_access_control" "oac" {
@@ -179,6 +217,7 @@ data "aws_iam_policy_document" "default" {
     }
   }
 }
+
 
 
 
