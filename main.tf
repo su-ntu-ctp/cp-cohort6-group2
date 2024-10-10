@@ -1,8 +1,9 @@
 provider "aws" {
   region = "us-east-1"
 }
-
+#=============================================
 # S3 Bucket for Static Website
+#=============================================
 resource "aws_s3_bucket" "static_site" {
   bucket = "my-fruit-shop-static-site"
 
@@ -15,8 +16,9 @@ resource "aws_s3_bucket" "static_site" {
     create = "15m"
   }
 }
-
+#=========================================
 # DynamoDB Table
+#=========================================
 resource "aws_dynamodb_table" "fruit_orders" {
   name         = "fruit_orders"
   billing_mode = "PAY_PER_REQUEST"
@@ -27,8 +29,10 @@ resource "aws_dynamodb_table" "fruit_orders" {
     type = "S"
   }
 }
-
+#========================================
 # IAM Role for Lambda
+#========================================
+
 resource "aws_iam_role" "lambda_exec_role" {
   name = "lambda_exec_role"
 
@@ -47,8 +51,9 @@ resource "aws_iam_role" "lambda_exec_role" {
 }
 EOF
 }
-
+#=======================================
 # IAM Policy for Lambda to access SES
+#========================================
 resource "aws_iam_policy" "lambda_ses_policy" {
   name = "lambda_ses_policy"
 
@@ -90,7 +95,9 @@ resource "aws_lambda_function" "send_email" {
   }
 }
 
+#========================================
 # Lambda Function for processing orders
+#========================================
 resource "aws_lambda_function" "process_order" {
   function_name = "process_order"
   handler       = "lambda_function.lambda_handler"
@@ -107,8 +114,9 @@ resource "aws_lambda_function" "process_order" {
     }
   }
 }
-
+#=========================================
 # API Gateway for Lambda
+#=========================================
 resource "aws_api_gateway_rest_api" "api" {
   name        = "FruitShopAPI"
   description = "API for processing fruit shop orders"
@@ -150,14 +158,18 @@ resource "aws_lambda_permission" "api_gateway_permission" {
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 }
 
+#=====================================================
 # S3 Bucket Policy to Allow CloudFront Access
+#=====================================================
 resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
   bucket = aws_s3_bucket.static_site.id
 
   policy = data.aws_iam_policy_document.default.json
 }
 
+#=====================================================
 # CloudFront Distribution
+#=====================================================
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name              = aws_s3_bucket.static_site.bucket_regional_domain_name
@@ -191,7 +203,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 
+#==================================================
 # CloudFront Origin Access Control
+#==================================================
 resource "aws_cloudfront_origin_access_control" "oac" {
   name                              = "${aws_s3_bucket.static_site.id}-oac-${var.env}"
   origin_access_control_origin_type = "s3"
