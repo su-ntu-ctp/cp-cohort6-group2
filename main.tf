@@ -124,7 +124,7 @@ resource "aws_lambda_function" "send_email" {
 data "archive_file" "dynamodb_lambda_function" {
   type = "zip"
   source_file = "lambda_function.py"
-  output_path = "${path.module}/lambda_function.zip"
+  output_path = "${path.module}/process_order.zip"
 }
 
 resource "aws_lambda_function" "process_order" {
