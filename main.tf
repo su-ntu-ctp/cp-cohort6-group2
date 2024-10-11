@@ -116,6 +116,12 @@ resource "aws_lambda_function" "send_email" {
 #========================================
 # Lambda Function for processing orders
 #========================================
+data "archive_file" "dynamodb_lambda_function" {
+  type = "zip"
+  source_file = "../lambda_function.py"
+  output_path = "process_order.zip"
+}
+
 resource "aws_lambda_function" "process_order" {
   function_name = "process_order"
   handler       = "lambda_function.lambda_handler"
