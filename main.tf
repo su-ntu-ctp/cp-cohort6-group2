@@ -37,17 +37,35 @@ resource "aws_iam_role" "lambda_exec_role" {
   name = "lambda_exec_role"
 
   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Effect": "Allow",
+#       "Principal": {
+#         "Service": "lambda.amazonaws.com"
+#       },
+#       "Action": "sts:AssumeRole"
+#     }
+#   ]
+# }
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "apigateway:*",
+                "s3-object-lambda:WriteGetObjectResponse",
+                "dynamodb:*",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
 }
 EOF
 }
@@ -280,25 +298,6 @@ data "aws_iam_policy_document" "default" {
 #   }
 # }
 
-# # IAM Role for Lambda
-# resource "aws_iam_role" "lambda_exec_role" {
-#   name = "lambda_exec_role"
-
-#   assume_role_policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Principal": {
-#         "Service": "lambda.amazonaws.com"
-#       },
-#       "Action": "sts:AssumeRole"
-#     }
-#   ]
-# }
-# EOF
-# }
 
 # # Lambda Function
 # resource "aws_lambda_function" "process_order" {
