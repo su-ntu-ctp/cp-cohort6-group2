@@ -37,36 +37,19 @@ resource "aws_iam_role" "lambda_exec_role" {
   name = "lambda_exec_role"
 
   assume_role_policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Principal": {
-#         "Service": "lambda.amazonaws.com"
-#       },
-#       "Action": "sts:AssumeRole"
-#     }
-#   ]
-# }
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogStream",
-                "apigateway:*",
-                "s3-object-lambda:WriteGetObjectResponse",
-                "dynamodb:*",
-                "logs:CreateLogGroup",
-                "logs:PutLogEvents"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
 }
+
 EOF
 }
 #=========================================
@@ -140,8 +123,8 @@ resource "aws_lambda_function" "send_email" {
 #========================================
 data "archive_file" "dynamodb_lambda_function" {
   type = "zip"
-  source_file = "../lambda_function.py"
-  output_path = "process_order.zip"
+  source_file = "lambda_function.py"
+  output_path = "${path.module}/lambda_function.zip"
 }
 
 resource "aws_lambda_function" "process_order" {
