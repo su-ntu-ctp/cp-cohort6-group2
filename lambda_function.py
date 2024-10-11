@@ -30,10 +30,17 @@ def lambda_handler(event, context):
                 }
         
         # Extract order details
-        order_id = payload['order_id']
-        fruit = payload['fruit']
-        quantity = payload['quantity']
+        order_id = payload.get('order_id')
+        fruit = payload.get('fruit')
+        quantity = payload.get('quantity')
         
+        # Ensure order_id is not None
+        if order_id is None:
+            return {
+                'statusCode': 400,
+                'body': json.dumps("Missing required field: order_id")
+            }
+
         # Define the item to be stored in DynamoDB
         item = {
             'order_id': {'S': order_id},
