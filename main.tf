@@ -69,6 +69,28 @@ resource "aws_iam_role" "lambda_exec_role" {
 }
 EOF
 }
+#=========================================
+#Additional policy for Lambda Full access
+#=========================================
+resource "aws_iam_role_policy_attachment" "lambda_full_access_policy" {
+  role       = aws_iam_role.lambda_exec_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+}
+#=========================================
+#Additional policy for DynamoDB
+#=========================================
+resource "aws_iam_role_policy_attachment" "dynamodb_policy" {
+  role       = aws_iam_role.lambda_exec_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+}
+
+#=========================================
+#Additional policy for Lambda S3
+#=========================================
+resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
+  role       = aws_iam_role.lambda_exec_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonS3ObjectLambdaExecutionRolePolicy"
+}
 #=======================================
 # IAM Policy for Lambda to access SES
 #========================================
