@@ -53,7 +53,12 @@ def lambda_handler(event, context):
 
         return {
             'statusCode': 200,
-            'body': json.dumps(f"Order {order_id} processed successfully!")
+            'body': json.dumps(f"Order {order_id} processed successfully!"),
+            'headers': {
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': '*'
+            }  
         }
 
     except json.JSONDecodeError:
