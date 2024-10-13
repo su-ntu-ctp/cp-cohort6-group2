@@ -2,7 +2,7 @@
 # DynamoDB Table
 #=========================================
 resource "aws_dynamodb_table" "fruit_orders" {
-  name         = "fruit_orders"
+  name         = "fruit_orders_${var.env}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "order_id"
 
@@ -61,7 +61,7 @@ resource "aws_iam_role_policy_attachment" "lambda_s3_policy" {
 # IAM Policy for Lambda to access SES
 #========================================
 resource "aws_iam_policy" "lambda_ses_policy" {
-  name = "lambda_ses_policy"
+  name = "lambda_ses_policy_${var.env}"
 
   policy = <<EOF
 {
@@ -89,7 +89,7 @@ resource "aws_lambda_function" "send_email" {
   handler       = "email_lambda.lambda_handler"
   runtime       = "python3.8"
 
-  filename = "send_email.zip" # Prepackaged Lambda code for sending email
+  filename = "../../send_email.zip" # Prepackaged Lambda code for sending email
   role     = aws_iam_role.lambda_exec_role.arn
   timeout  = 10
 
@@ -107,11 +107,11 @@ resource "aws_lambda_function" "send_email" {
 data "archive_file" "dynamodb_lambda_function" {
   type = "zip"
   source_file = "../../lambda_function.py"
-  output_path = "${path.module}/process_order.zip"
+  output_path = "../../process_order.zip"
 }
 
 resource "aws_lambda_function" "process_order" {
-  function_name = "process_order"
+  function_name = "process_order_${var.env}"
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
 
@@ -131,7 +131,7 @@ resource "aws_lambda_function" "process_order" {
 # API Gateway for Lambda
 #=========================================
 resource "aws_api_gateway_rest_api" "api" {
-  name        = "FruitShopAPI"
+  name        = "FruitShopAPI_${var.env}"
   description = "API for processing fruit shop orders"
 }
 
@@ -164,10 +164,12 @@ resource "aws_api_gateway_integration_response" "post_integration_response" {
   http_method = aws_api_gateway_method.orders_post.http_method
   status_code = "200"
 
+  depends_on = [aws_api_gateway_integration.lambda_integration]
+
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
-    "method.response.header.Access-Control-Allow-Headers" = "*"
-    "method.response.header.Access-Control-Allow-Methods" = "*"
+    "method.response.header.Access-Control-Allow-Headers" = "'*'"
+    "method.response.header.Access-Control-Allow-Methods" = "'*'"
   }
 }
 
