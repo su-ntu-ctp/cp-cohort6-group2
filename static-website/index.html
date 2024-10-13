@@ -84,12 +84,13 @@
             }
 
             // Replace with your AWS API Gateway endpoint
-            const apiUrl = 'https://2a22v3sh3i.execute-api.us-east-1.amazonaws.com/prod/orders';
+            const apiUrl = 'main.tf.ap';
 
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                 },
                 body: JSON.stringify({ 
                     order_id: order_id, // Matches order_id from curl example

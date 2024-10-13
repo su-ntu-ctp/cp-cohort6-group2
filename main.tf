@@ -173,6 +173,34 @@ resource "aws_api_gateway_integration" "lambda_integration" {
   uri                     = aws_lambda_function.process_order.invoke_arn
 }
 
+# Integration Response for POST
+resource "aws_api_gateway_integration_response" "post_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.orders_resource.id
+  http_method = aws_api_gateway_method.orders_post.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+    "method.response.header.Access-Control-Allow-Headers" = "*"
+    "method.response.header.Access-Control-Allow-Methods" = "*"
+  }
+}
+
+# Method Response for POST
+resource "aws_api_gateway_method_response" "post_method_response" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.orders_resource.id
+  http_method = aws_api_gateway_method.orders_post.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+  }
+}
+
 resource "aws_api_gateway_deployment" "api_deployment" {
   depends_on  = [aws_api_gateway_integration.lambda_integration]
   rest_api_id = aws_api_gateway_rest_api.api.id
