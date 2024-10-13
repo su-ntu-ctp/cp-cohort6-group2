@@ -5,13 +5,13 @@ locals {
 }
 
 
-module "static_web_stack" {
-  source = "../../modules/cloudfront-s3"
-
-   env                 = local.env
+module "cloudfront-s3" {
+  source          = "../../modules/cloudfront-s3"
+  env             = local.env
 }
 
-module "static_web_stack" {
+
+module "lambda-db-api" {
   source = "../../modules/lambda-db-api"
    env                 = local.env
 }

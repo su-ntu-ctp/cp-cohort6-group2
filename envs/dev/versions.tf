@@ -6,11 +6,4 @@ terraform {
       version = "~> 5.31.0"
     }
   }
-  cloud {
-    organization = "jaz-test-org"
-
-    workspaces {
-      name = "cloudfront-s3-nonprd"
-    }
-  }
 }

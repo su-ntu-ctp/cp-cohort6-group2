@@ -17,7 +17,7 @@ resource "aws_dynamodb_table" "fruit_orders" {
 #========================================
 
 resource "aws_iam_role" "lambda_exec_role" {
-  name = "lambda_exec_role"
+  name = "lambda_exec_role_${var.env}"
 
   assume_role_policy = <<EOF
 {
@@ -106,7 +106,7 @@ resource "aws_lambda_function" "send_email" {
 #========================================
 data "archive_file" "dynamodb_lambda_function" {
   type = "zip"
-  source_file = "lambda_function.py"
+  source_file = "../../lambda_function.py"
   output_path = "${path.module}/process_order.zip"
 }
 
@@ -188,7 +188,7 @@ resource "aws_api_gateway_method_response" "post_method_response" {
 resource "aws_api_gateway_deployment" "api_deployment" {
   depends_on  = [aws_api_gateway_integration.lambda_integration]
   rest_api_id = aws_api_gateway_rest_api.api.id
-  stage_name  = "prod"
+  stage_name  = "${var.env}"
 }
 
 resource "aws_lambda_permission" "api_gateway_permission" {

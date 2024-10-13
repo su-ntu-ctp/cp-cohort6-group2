@@ -8,7 +8,7 @@
 #===========================================
 data "archive_file" "dynamodb_lambda_function" {
   type = "zip"
-  source_file = "lambda_function.py"
+  source_file = "../../lambda_function.py"
   output_path = "${path.module}/process_order.zip"
 }
 
@@ -18,7 +18,7 @@ data "archive_file" "dynamodb_lambda_function" {
 data "aws_iam_policy_document" "default" {
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.static_site.arn}/*"]
+    resources = ["${module.cloudfront-s3.s3_bucket_arn}/*"]
 
     principals {
       type        = "Service"
@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "default" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [aws_cloudfront_distribution.s3_distribution.arn]
+      values   = [module.cloudfront-s3.s3_distribution_arn]
     }
   }
 }
