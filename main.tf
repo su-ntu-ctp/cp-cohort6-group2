@@ -270,7 +270,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
   signing_protocol                  = "sigv4"
 }
 
-# IAM Policy Document for S3 CloudFront Access
+# data-IAM Policy Document for S3 CloudFront Access
 data "aws_iam_policy_document" "default" {
   statement {
     actions   = ["s3:GetObject"]

@@ -3,7 +3,7 @@
 #=============================================
 # Define the S3 bucket
 resource "aws_s3_bucket" "static_site" {
-  bucket = "my-fruit-shop-static-site"
+  bucket = "${var.env}-my-fruit-shop-static-site"
 
   # Enables website hosting on this S3 bucket
   force_destroy = true # Deletes objects in the bucket when deleting the bucket

@@ -1,7 +1,7 @@
-# terraform {
-#   backend "s3" {
-#     bucket = "sctp-ce4-tfstate-bucket"
-#     key    = "jazeel-static-web-prd.tfstate"
-#     region = "ap-southeast-1"
-#   }
-# }
+ terraform {
+   backend "s3" {
+     bucket = "sctp-ce6-tfstate"
+     key    = "ce6-group2-project-prod.tfstate"
+     region = "ap-southeast-1"
+   }
+ }
