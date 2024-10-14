@@ -6,7 +6,7 @@
  run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
  on:
    push:
-      branches: [ "dev" ]
+      branches: [ dev, "*" ]
       paths:
        - 'envs/dev/**'
 
@@ -48,7 +48,7 @@
     - name: Terraform Plan
       run: terraform plan
    
-   CD:
+    CD:
        runs-on: ubuntu-latest
        needs: CI
 
