@@ -32,21 +32,22 @@ jobs:
         run: terraform -chdir=envs/dev fmt --recursive
     
       - name: Terraform Init
-        run: terraform -chdir=envs/dev init
+        run: terraform init
+        terraform -chdir=envs/dev apply
     
       - name: Terraform Validate
-        run: terraform -chdir=envs/dev validate -no-color
-     
+        run: terraform validate -no-color
+        terraform -chdir=envs/dev apply
     
       - name: Checkov
         uses: bridgecrewio/checkov-action@master
         with:
           framework: terraform
-      
+        terraform -chdir=envs/dev apply
 
       - name: Terraform Plan
-        run: terraform -chdir=envs/dev plan
-      
+        run: terraform plan
+        terraform -chdir=envs/dev apply
 
   CD:
     runs-on: ubuntu-latest
@@ -69,19 +70,20 @@ jobs:
           terraform_wrapper: false
 
       - name: Terraform Init
-        run: terraform -chdir=envs/dev init
-        
+        run: terraform init
+        terraform -chdir=envs/dev apply
 
       - name: Terraform Apply
-        run: terraform -chdir=envs/dev apply -auto-approve
-        
+        run: terraform apply -auto-approve
+        terraform -chdir=envs/dev apply
 
       - name: Export terraform outputs
         id: tfout
-        run: |
+        run: 
           echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_OUTPUT
           echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_OUTPUT
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_OUTPUT
+        terraform -chdir=envs/dev apply
 
       - name: S3 Deployment
         run: aws s3 sync . s3://${{ steps.tfout.outputs.S3_NAME }}
