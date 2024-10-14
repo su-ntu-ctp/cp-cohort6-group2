@@ -187,6 +187,55 @@ resource "aws_api_gateway_method_response" "post_method_response" {
   }
 }
 
+# OPTIONS Method (for CORS)
+resource "aws_api_gateway_method" "orders_options" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.orders_resource.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+# OPTIONS Integration (MOCK integration for CORS)
+resource "aws_api_gateway_integration" "options_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.api.id
+  resource_id             = aws_api_gateway_resource.orders_resource.id
+  http_method             = aws_api_gateway_method.orders_options.http_method
+  type                    = "MOCK"
+  integration_http_method = "OPTIONS"
+  
+  request_templates = {
+    "application/json" = "{ \"statusCode\": 200 }"
+  }
+}
+
+# Integration Response for OPTIONS (CORS headers)
+resource "aws_api_gateway_integration_response" "options_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.orders_resource.id
+  http_method = aws_api_gateway_method.orders_options.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+    "method.response.header.Access-Control-Allow-Headers" = "'*'"
+    "method.response.header.Access-Control-Allow-Methods" = "'*'"
+  }
+}
+
+# Method Response for OPTIONS (CORS headers)
+resource "aws_api_gateway_method_response" "options_method_response" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.orders_resource.id
+  http_method = aws_api_gateway_method.orders_options.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+  }
+}
+
 resource "aws_api_gateway_deployment" "api_deployment" {
   depends_on  = [aws_api_gateway_integration.lambda_integration]
   rest_api_id = aws_api_gateway_rest_api.api.id
