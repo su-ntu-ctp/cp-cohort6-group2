@@ -85,7 +85,7 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_role_ses" {
 
 # Lambda Function to send email notifications
 resource "aws_lambda_function" "send_email" {
-  function_name = "send_email_notification"
+  function_name = "send_email_notification_${var.env}"
   handler       = "email_lambda.lambda_handler"
   runtime       = "python3.8"
 
@@ -215,12 +215,14 @@ resource "aws_api_gateway_integration_response" "options_integration_response" {
   http_method = aws_api_gateway_method.orders_options.http_method
   status_code = "200"
 
+  depends_on = [aws_api_gateway_integration.options_integration]
+
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'*'"
     "method.response.header.Access-Control-Allow-Methods" = "'*'"
   }
-  depends_on = [aws_api_gateway_integration.options_integration]
+  
 }
 
 

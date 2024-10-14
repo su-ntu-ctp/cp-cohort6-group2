@@ -1,5 +1,5 @@
 locals {
-  env           = ""
+  env           = "prod"
   domain_prefix = "myfruitshop"
   zone_name     = "sctp-sandbox.com"
 }
