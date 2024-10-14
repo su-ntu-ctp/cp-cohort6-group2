@@ -1,103 +1,3 @@
-# name: Full Dev-ployment
-
-# run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-
-# on:
-#   push:
-#     branches:
-#       - dev
-
-# env:            
-#   AWS_REGION: ap-southeast-1  
-
-# jobs:
-#   CI:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-    
-#       - name: Configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ env.AWS_REGION }}
-
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v2
-
-#       # Specify the working directory for Terraform commands (envs/dev)
-#       - name: Terraform fmt
-#         run: terraform fmt --recursive
-#         working-directory: ./envs/dev
-    
-#       - name: Terraform Init
-#         run: terraform init
-#         working-directory: ./envs/dev
-    
-#       - name: Terraform Validate
-#         run: terraform validate -no-color
-#         working-directory: ./envs/dev
-    
-#       - name: Checkov
-#         uses: bridgecrewio/checkov-action@master
-#         with:
-#           framework: terraform
-#         working-directory: ./envs/dev
-
-#       - name: Terraform Plan
-#         run: terraform plan
-#         working-directory: ./envs/dev
-
-#   CD:
-#     runs-on: ubuntu-latest
-#     needs: CI
-  
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-
-#       - name: Configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ env.AWS_REGION }}
-
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v2
-#         with:
-#           terraform_wrapper: false
-#         working-directory: ./envs/dev
-
-#       - name: Terraform Init
-#         run: terraform init
-#         working-directory: ./envs/dev
-
-#       - name: Terraform Apply
-#         run: terraform apply -auto-approve
-#         working-directory: ./envs/dev
-
-#       - name: Export terraform outputs
-#         id: tfout
-#         run: |
-#           echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_OUTPUT
-#           echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_OUTPUT
-#           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_OUTPUT
-#         working-directory: ./envs/dev
-
-#       - name: S3 Deployment
-#         run: aws s3 sync . s3://${{ steps.tfout.outputs.S3_NAME }}
-#         working-directory: ./static-website
-
-#       - name: Invalidate cache
-#         run: aws cloudfront create-invalidation --distribution-id ${{ steps.tfout.outputs.CF_ID }} --paths "/*"
-
-#       - name: Output CF domain
-#         run: echo "${{ steps.tfout.outputs.CF_DOMAIN }}"
-
 name: Full Dev-ployment
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
@@ -115,12 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Debug Information
-        run: |
-          echo "GitHub Actor: ${{ github.actor }}"
-          echo "GitHub Event Name: ${{ github.event_name }}"
-          echo "Ref: ${{ github.ref }}"
-
       - name: Checkout
         uses: actions/checkout@v3
     
@@ -176,6 +70,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
+        working-directory: ./envs/dev
 
       - name: Terraform Init
         run: terraform init
