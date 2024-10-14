@@ -4,17 +4,17 @@
 #   pull_request:
 #     branches: [ "main" ]
 
-on:
+ on:
   push:
     branches: 
-          - dev
+      - dev
     paths:
       - 'envs/dev/**'
 
-env:            
+ env:            
   AWS_REGION: ap-southeast-1  
 
-jobs:
+ jobs:
   CI:
     runs-on: ubuntu-latest
 
