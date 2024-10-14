@@ -22,7 +22,7 @@
     - name: Checkout
       uses: actions/checkout@v3
     - name: Clear Terraform
-      uses: rm -rf .terraform
+      run: rm -rf .terraform
 
   
     - name: Configure AWS credentials
