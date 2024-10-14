@@ -6,8 +6,7 @@
 
  on:
   push:
-    branches: 
-      - dev
+    branches: [ "dev" ]
     paths:
       - 'envs/dev/**'
 
