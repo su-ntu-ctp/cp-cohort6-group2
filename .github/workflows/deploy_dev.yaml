@@ -12,7 +12,7 @@ on:
       - 'envs/dev/**'
 
 env:            
-  AWS_REGION: us-east-1  
+  AWS_REGION: ap-southeast-1  
 
 jobs:
   CI:
