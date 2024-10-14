@@ -220,7 +220,9 @@ resource "aws_api_gateway_integration_response" "options_integration_response" {
     "method.response.header.Access-Control-Allow-Headers" = "'*'"
     "method.response.header.Access-Control-Allow-Methods" = "'*'"
   }
+  depends_on = [aws_api_gateway_integration.options_integration]
 }
+
 
 # Method Response for OPTIONS (CORS headers)
 resource "aws_api_gateway_method_response" "options_method_response" {

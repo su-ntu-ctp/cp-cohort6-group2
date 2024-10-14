@@ -1,27 +1,27 @@
 locals {
-  env           = "prod"
+  env           = ""
   domain_prefix = "myfruitshop"
   zone_name     = "sctp-sandbox.com"
 }
 
-module "static_web_stack" {
+
+module "cloudfront-s3" {
   source = "../../modules/cloudfront-s3"
-  env                 = local.env
+  env    = local.env
 }
 
-module "static_web_stack" {
+
+module "lambda-db-api" {
   source = "../../modules/lambda-db-api"
-  env                 = local.env
+  env    = local.env
 }
 
-# module "static_web_stack" {
-#   source = "../../modules/cloudfront-s3"
-
-#   env                 = local.env
 #   acm_certificate_arn = module.acm.acm_certificate_arn
 #   aliases             = ["${local.domain_prefix}-${local.env}.${local.zone_name}"]
 #   web_acl_id          = module.waf.web_acl_arn
 # }
+
+
 
 # module "waf" {
 #   source = "../../modules/waf"
@@ -43,7 +43,7 @@ module "static_web_stack" {
 #   }
 
 #   domain_name       = "${local.domain_prefix}-${local.env}.${local.zone_name}"
-#   zone_id           = data.aws_route53_zone.prod.zone_id
+#   zone_id           = data.aws_route53_zone.nonprod.zone_id
 #   validation_method = "DNS"
 # }
 
