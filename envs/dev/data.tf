@@ -7,7 +7,7 @@
 # data - Lambda Function for processing orders
 #===========================================
 data "archive_file" "dynamodb_lambda_function" {
-  type = "zip"
+  type        = "zip"
   source_file = "../../lambda_function.py"
   output_path = "${path.module}/process_order.zip"
 }
