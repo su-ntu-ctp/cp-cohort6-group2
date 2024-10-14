@@ -3,19 +3,19 @@
 #  on:
 #   pull_request:
 #     branches: [ "main" ]
-
+ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
  on:
    push:
-     branches: [ "dev" ]
-     paths:
-      - 'envs/dev/**'
+      branches: [ "dev" ]
+      paths:
+       - 'envs/dev/**'
 
  env:            
-   AWS_REGION: ap-southeast-1  
+    AWS_REGION: ap-southeast-1  
 
  jobs:
-   CI:
-    runs-on: ubuntu-latest
+    CI:
+      runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -49,8 +49,8 @@
       run: terraform plan
    
    CD:
-    runs-on: ubuntu-latest
-    needs: CI
+       runs-on: ubuntu-latest
+       needs: CI
 
     steps:
     - name: Checkout
