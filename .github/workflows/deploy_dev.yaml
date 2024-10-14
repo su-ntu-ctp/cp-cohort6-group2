@@ -32,22 +32,22 @@ jobs:
         run: terraform -chdir=envs/dev fmt --recursive
     
       - name: Terraform Init
-        run: terraform init
-        terraform -chdir=envs/dev apply
+        run: terraform -chdir=envs/dev init
+       
     
       - name: Terraform Validate
-        run: terraform validate -no-color
-        terraform -chdir=envs/dev apply
+        run: terraform -chdir=envs/dev validate -no-color
+        
     
       - name: Checkov
         uses: bridgecrewio/checkov-action@master
         with:
           framework: terraform
-        terraform -chdir=envs/dev apply
+      
 
       - name: Terraform Plan
-        run: terraform plan
-        terraform -chdir=envs/dev apply
+        run: terraform -chdir=envs/dev plan
+    
 
   CD:
     runs-on: ubuntu-latest
@@ -70,12 +70,12 @@ jobs:
           terraform_wrapper: false
 
       - name: Terraform Init
-        run: terraform init
-        terraform -chdir=envs/dev apply
+        run: terraform -chdir=envs/dev init
+        
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
-        terraform -chdir=envs/dev apply
+        run: terraform -chdir=envs/dev apply -auto-approve
+    
 
       - name: Export terraform outputs
         id: tfout
