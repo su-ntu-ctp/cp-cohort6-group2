@@ -6,13 +6,15 @@ locals {
 
 
 module "cloudfront-s3" {
-  source = "../../modules/cloudfront-s3"
+  source = "${path.module}/modules/cloudfront-s3"
+  #source = "../../modules/cloudfront-s3"
   env    = local.env
 }
 
 
 module "lambda-db-api" {
-  source = "../../modules/lambda-db-api"
+  source = "${path.module}/modules/lambda-db-api"
+  #source = "../../modules/lambda-db-api"
   env    = local.env
 }
 
