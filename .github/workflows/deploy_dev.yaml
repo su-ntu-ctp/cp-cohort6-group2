@@ -10,6 +10,12 @@ on:
 env:            
   AWS_REGION: ap-southeast-1  
 
+      - name: Debug Information
+        run: |
+          echo "GitHub Actor: ${{ github.actor }}"
+          echo "GitHub Event Name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+
 jobs:
   CI:
     runs-on: ubuntu-latest
