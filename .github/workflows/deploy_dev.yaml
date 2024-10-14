@@ -32,7 +32,7 @@ jobs:
         run: terraform -chdir=envs/dev fmt --recursive
     
       - name: Terraform Init
-        run: terraform init
+        run: terraform init --from-module=../../modules
         terraform -chdir=envs/dev apply
     
       - name: Terraform Validate
