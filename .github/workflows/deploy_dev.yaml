@@ -82,7 +82,9 @@ jobs:
           echo "CF_ID=$(terraform output -raw cf_id)"
           echo "S3_NAME=$(terraform output -raw bucket_name)"
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
-        working-directory: './envs/dev'
+          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)"
+
+          working-directory: './envs/dev'
 
       - name: S3 Deployment
         run: aws s3 cp . s3://dev-my-fruit-shop-static-site/ --recursive
