@@ -88,8 +88,8 @@ jobs:
         run: aws s3 cp . s3://dev-my-fruit-shop-static-site/ --recursive
         working-directory: ./static-website
 
-      - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ env.CF_ID }} --paths "/*"
+      # - name: Invalidate cache
+      #   run: aws cloudfront create-invalidation --distribution-id ${{ env.CF_ID }} --paths "/*"
 
       - name: Output CF domain
         run: echo "${{ env.CF_DOMAIN }}"
