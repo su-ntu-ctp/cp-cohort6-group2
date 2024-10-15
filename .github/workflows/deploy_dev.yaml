@@ -14,8 +14,8 @@ env:
 #   CONFIG_DIRECTORY: "env/dev"
 
 defaults:
-      run:
-        tf_actions_working_dir: './envs/dev'
+    run:
+       tf_actions_working_dir: './envs/dev'
 
 jobs:
   CI:
