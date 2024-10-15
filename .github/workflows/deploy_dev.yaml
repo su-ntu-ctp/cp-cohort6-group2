@@ -7,36 +7,43 @@ on:
     branches:
       - dev
 
-defaults:
-  run:
-    tf_actions_working_dir: './envs/dev'
-
 jobs:
   CI:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
     
+      - name: List Files for Debugging
+        run: ls -la
+        # This will help you confirm that the directory structure is as expected
+    
+      - name: List Env Directory Contents for Debugging
+        run: ls -la ./envs/dev
+        # This will show if the envs/dev directory exists
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1 # Explicit AWS_REGION here
+          aws-region: ap-southeast-1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform fmt
         run: terraform fmt --recursive
+        working-directory: './envs/dev'
     
       - name: Terraform Init
         run: terraform init
-
+        working-directory: './envs/dev'
+    
       - name: Terraform Validate
         run: terraform validate -no-color
+        working-directory: './envs/dev'
         
       - name: Checkov
         uses: bridgecrewio/checkov-action@v1
@@ -45,6 +52,7 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: './envs/dev'
     
 
   CD:
@@ -60,16 +68,18 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1 # Explicit AWS_REGION here
+          aws-region: ap-southeast-1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
         run: terraform init
+        working-directory: './envs/dev'
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: './envs/dev'
 
       - name: Export terraform outputs
         id: tfout
@@ -77,6 +87,7 @@ jobs:
           echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_OUTPUT
           echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_OUTPUT
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_OUTPUT
+        working-directory: './envs/dev'
 
       - name: S3 Deployment
         run: aws s3 sync . s3://${{ steps.tfout.outputs.S3_NAME }}
