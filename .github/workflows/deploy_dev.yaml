@@ -11,7 +11,12 @@ env:
   AWS_REGION: ap-southeast-1 
 #   TF_CLOUD_ORGANIZATION: "aldin-org"
 #   TF_WORKSPACE: "cp-ce6-g2-dev"
-#   CONFIG_DIRECTORY: "env/dev" 
+#   CONFIG_DIRECTORY: "env/dev"
+
+defaults:
+  run:
+    tf_actions_working_dir: './envs/dev'
+    
 jobs:
   CI:
     runs-on: ubuntu-latest
