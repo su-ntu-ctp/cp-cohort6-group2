@@ -79,9 +79,9 @@ jobs:
         id: tfout
         shell: bash
         run: |
-          echo "CF_ID=$(terraform output -raw cf_id)"
-          echo "S3_NAME=$(terraform output -raw bucket_name)"
-          echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
+          echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_ENV
+          echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
+          echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
         working-directory: './envs/dev'
 
       - name: S3 Deployment
