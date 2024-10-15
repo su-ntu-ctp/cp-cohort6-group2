@@ -8,14 +8,14 @@ on:
       - dev
 
 env:            
-  AWS_REGION: ap-southeast-1  
-
+  AWS_REGION: ap-southeast-1 
+#   TF_CLOUD_ORGANIZATION: "aldin-org"
+#   TF_WORKSPACE: "cp-ce6-g2-dev"
+#   CONFIG_DIRECTORY: "env/dev" 
 jobs:
   CI:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: /envs/dev/
+    
 
     steps:
       - name: Checkout
@@ -55,9 +55,7 @@ jobs:
   CD:
     runs-on: ubuntu-latest
     needs: CI
-    defaults:
-      run:
-        working-directory: /envs/dev/
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
