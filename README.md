@@ -13,7 +13,7 @@ Sourced from local farmers in Dandong, our strawberries are celebrated for their
 <img width="539" alt="Deployment Strategy" src="https://github.com/user-attachments/assets/b5cb4d68-fe08-4d54-aade-c8fbc8ebcbe0">
 
 ## Cloud Architecture:
-<img width="374" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/3c22f412-be3f-4c29-9cb6-972c7fac5113">
+<img width="359" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/85ced634-dfc5-4561-baa5-0ca5310beff5">
 
 # DevOps Strategy for BerryFresh
 
@@ -69,4 +69,5 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 
 ## Summary
 This DevOps strategy for BerryFresh leverages AWS services to build a resilient, scalable, and efficient e-commerce platform. By effectively integrating static and dynamic content layers, and employing best practices in monitoring, security, and CI/CD, BerryFresh can deliver a seamless shopping experience to its customers while maintaining rapid deployment cycles. This approach not only enhances performance but also fosters a culture of continuous improvement and innovation.
+
 
