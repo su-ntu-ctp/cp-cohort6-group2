@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: [/envs/dev/]
+        working-directory: /envs/dev/
 
     steps:
       - name: Checkout
@@ -57,7 +57,7 @@ jobs:
     needs: CI
     defaults:
       run:
-        working-directory: [/envs/dev/]
+        working-directory: /envs/dev/
     steps:
       - name: Checkout
         uses: actions/checkout@v3
