@@ -9,10 +9,11 @@ Sourced from local farmers in Dandong, our strawberries are celebrated for their
 
 **BerryFresh**, your go-to e-commerce platform dedicated to bringing the finest strawberries from Dandong, China, straight to your door. Our mission is to provide you with fresh, high-quality strawberries that capture the essence of their rich, flavourful heritage.
 
+## Deployment Strategy
+<img width="539" alt="Deployment Strategy" src="https://github.com/user-attachments/assets/b5cb4d68-fe08-4d54-aade-c8fbc8ebcbe0">
 
 ## Cloud Architecture:
-<img width="367" alt="Cloud Architecture" src="https://github.com/user-attachments/assets/c13e8050-823d-4797-a1da-11d1016ef693">
-
+<img width="374" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/3c22f412-be3f-4c29-9cb6-972c7fac5113">
 
 # DevOps Strategy for BerryFresh
 
