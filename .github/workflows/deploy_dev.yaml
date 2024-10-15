@@ -87,7 +87,7 @@ jobs:
       - name: Export Terraform Outputs
         id: tf
         run: |
-          echo "API_ENDPOINT=${terraform output -raw api_endpoint}" >> $GITHUB_OUTPUT
+          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_OUTPUT
 
       - name: Replace API Endpoint in index.html
         run: |
