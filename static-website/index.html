@@ -84,7 +84,7 @@
             }
 
             // Replace with your AWS API Gateway endpoint
-            const apiUrl = '"{{API_ENDPOINT}}"/orders';
+            const apiUrl = 'https://${module.lambda.db.api.api_endpoint.execute-api}.ap-southeast-1.amazonaws.com/${var.env}/orders';
 
             fetch(apiUrl, {
                 method: 'POST',
