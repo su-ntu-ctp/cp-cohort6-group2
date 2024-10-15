@@ -13,6 +13,9 @@ env:
 jobs:
   CI:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: /envs/dev
 
     steps:
       - name: Checkout
@@ -29,14 +32,14 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform fmt
-        run: terraform -chdir=envs/dev fmt --recursive
+        run: terraform fmt --recursive
     
       - name: Terraform Init
-        run: terraform -chdir=envs/dev init
+        run: terraform init
        
     
       - name: Terraform Validate
-        run: terraform -chdir=envs/dev validate -no-color
+        run: terraform validate -no-color
         
     
       - name: Checkov
@@ -46,13 +49,15 @@ jobs:
       
 
       - name: Terraform Plan
-        run: terraform -chdir=envs/dev plan
+        run: terraform plan
     
 
   CD:
     runs-on: ubuntu-latest
     needs: CI
-  
+    defaults:
+      run:
+        working-directory: /envs/dev
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -70,11 +75,11 @@ jobs:
           terraform_wrapper: false
 
       - name: Terraform Init
-        run: terraform -chdir=envs/dev init
+        run: terraform init
         
 
       - name: Terraform Apply
-        run: terraform -chdir=envs/dev apply -auto-approve
+        run: terraform apply -auto-approve
     
 
       - name: Export terraform outputs
