@@ -7,14 +7,14 @@ locals {
 
 module "cloudfront-s3" {
   #source = "${path.root}/modules/cloudfront-s3"
-  source = "../modules/cloudfront-s3"
+  source = "../../modules/cloudfront-s3"
   env    = local.env
 }
 
 
 module "lambda-db-api" {
   #source = "${path.root}/modules/lambda-db-api"
-  source = "../modules/lambda-db-api"
+  source = "../../modules/lambda-db-api"
   env    = local.env
 }
 
