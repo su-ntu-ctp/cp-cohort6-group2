@@ -85,7 +85,7 @@ jobs:
         working-directory: './envs/dev'
 
       - name: S3 Deployment
-        run: aws s3 sync . s3://${{ env.S3_NAME }}
+        run: aws s3 sync . s3://${{ env.S3_NAME }}/ --recursive
         working-directory: ./static-website
 
       - name: Invalidate cache
