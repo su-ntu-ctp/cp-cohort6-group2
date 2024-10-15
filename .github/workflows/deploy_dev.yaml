@@ -82,11 +82,12 @@ jobs:
           echo "CF_ID=$(terraform output -raw cf_id)"
           echo "S3_NAME=$(terraform output -raw bucket_name)"
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
-          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)"
+          API_ENDPOINT=$(terraform output -raw api_endpoint)
+          echo "API_ENDPOINT=$API_ENDPOINT" >> $GITHUB_ENV
         working-directory: './envs/dev'
 
       - name: Replace API Endpoint in index.html
-        run: sed -i 's/{{API_ENDPOINT}}/${{ env.API_ENDPOINT }}/g' ./static-website/index.html
+        sed -i "s|{{API_ENDPOINT}}|${{ env.API_ENDPOINT }}|g" ./static-website/index.html
 
       - name: S3 Deployment
         run: aws s3 cp . s3://dev-my-fruit-shop-static-site/ --recursive
