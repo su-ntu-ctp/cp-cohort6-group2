@@ -82,8 +82,7 @@ jobs:
           echo "CF_ID=$(terraform output -raw cf_id)"
           echo "S3_NAME=$(terraform output -raw bucket_name)"
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
-          API_ENDPOINT=$(terraform output -raw api_endpoint)
-          echo "API_ENDPOINT=$API_ENDPOINT" >> $GITHUB_ENV
+          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_OUTPUT
         working-directory: './envs/dev'
 
       - name: Replace API Endpoint in index.html
