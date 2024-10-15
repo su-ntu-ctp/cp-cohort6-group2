@@ -76,22 +76,22 @@ jobs:
         working-directory: './envs/dev'
 
       - name: Export Terraform Outputs
-        id: tfout
-        shell: bash
-        run: |
-          echo "CF_ID=$(terraform output -raw cf_id)"
-          echo "S3_NAME=$(terraform output -raw bucket_name)"
-          echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
-        working-directory: './envs/dev'
-
-      - name: Export Terraform Outputs
         id: tf
         run: |
-          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_OUTPUT
+         # Capture the API endpoint and print it for debugging
+          API_ENDPOINT=$(terraform output -raw api_endpoint)
+          echo "API_ENDPOINT=${API_ENDPOINT}" >> $GITHUB_OUTPUT
+          echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_OUTPUT
+          echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_OUTPUT
+          echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_OUTPUT
+          
+        # Debugging: Print the values
+          echo "Debug: API_ENDPOINT is ${API_ENDPOINT}"
 
       - name: Replace API Endpoint in index.html
         run: |
           sed -i "s|{{API_ENDPOINT}}|${{ steps.tf.outputs.API_ENDPOINT }}|g" ./static-website/index.html
+
 
       - name: S3 Deployment
         run: aws s3 cp . s3://dev-my-fruit-shop-static-site/ --recursive
