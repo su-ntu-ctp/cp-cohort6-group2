@@ -79,7 +79,8 @@ jobs:
         id: tfout
         shell: bash
         run: |
-          echo "CF_ID='$(terraform output -raw cf_id)'" >> $GITHUB_ENV
+          terraform output -raw cf_id
+          #echo "CF_ID='$(terraform output -raw cf_id)'" >> $GITHUB_ENV
 
         working-directory: './envs/dev'
 
