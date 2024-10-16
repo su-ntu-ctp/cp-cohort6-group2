@@ -83,7 +83,7 @@ jobs:
         run: |
           terraform output -raw cf_id
           echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_ENV
-          echo "S3_NAME=$(terraform output -raw s3_name)" >> $GITHUB_ENV
+          echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
           echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_ENV
 
@@ -95,7 +95,7 @@ jobs:
           sed -i "s|{{API_ENDPOINT}}|${{ env.API_ENDPOINT }}|g" ./static-website/index.html
 
       - name: S3 Deployment
-        run: aws s3 cp . s3://dev-my-fruit-shop-static-site/ --recursive
+        run: aws s3 sync . s3://${{ env.S3_NAME }}
         working-directory: ./static-website
 
       # - name: Invalidate cache
