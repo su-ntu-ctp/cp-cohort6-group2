@@ -1,7 +1,6 @@
-name: Full PROD Deployment
+name: Full PRDO deployment
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-
 
 on:
   pull_request:
@@ -10,7 +9,7 @@ on:
 # on:
 #   push:
 #     branches:
-#       - dev
+#       - main
 
 jobs:
   CI:
@@ -19,14 +18,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-    
+
       - name: List Files for Debugging
         run: ls -la
         # This will help you confirm that the directory structure is as expected
     
       - name: List Env Directory Contents for Debugging
         run: ls -la ./envs/prod
-        # This will show if the envs/dev directory exists
+        # This will show if the envs/prod directory exists
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -71,32 +70,39 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
-
+        with:
+          terraform_wrapper: false
+    
       - name: Terraform Init
-        run: terraform init
+        run: terraform init 
         working-directory: './envs/prod'
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: './envs/prod'
 
-      - name: Export terraform outputs
+      - name: Export Terraform Outputs
         id: tfout
         shell: bash
         run: |
-          echo "CF_ID=$(terraform output -raw cf_id)"
-          echo "S3_NAME=$(terraform output -raw bucket_name)"
-          echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
-          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)"
+          echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_ENV
+          echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
+          echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
+          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_ENV
 
-          working-directory: './envs/prod'
+        working-directory: './envs/prod'
+
+      - name: Replace API Endpoint in index.html
+        run: |
+         sed -i "s|{{API_ENDPOINT}}|${{ env.API_ENDPOINT }}|g" ./static-website/index.html
 
       - name: S3 Deployment
-        run: aws s3 cp . s3://prod-my-fruit-shop-static-site/ --recursive
+        run: aws s3 sync . s3://${{ env.S3_NAME }}
         working-directory: ./static-website
 
-      # - name: Invalidate cache
-      #   run: aws cloudfront create-invalidation --distribution-id ${{ env.CF_ID }} --paths "/*"
+      - name: Invalidate cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ env.CF_ID }} --paths "/*"
 
       - name: Output CF domain
         run: echo "${{ env.CF_DOMAIN }}"
+
