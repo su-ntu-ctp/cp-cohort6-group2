@@ -79,14 +79,15 @@ jobs:
         id: tfout
         shell: bash
         run: |
-          echo "CF_ID=$(terraform output -raw cf_id)"
-          echo "S3_NAME=$(terraform output -raw bucket_name)"
-          echo "CF_DOMAIN=$(terraform output -raw cf_domain)"
-          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)"
+          echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_ENV
+          echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
+          echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
+          echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_ENV
         working-directory: './envs/dev'
 
       - name: Replace API Endpoint in index.html
         run: |
+          echo "API_ENDPOINT: ${{ env.API_ENDPOINT }}"
           sed -i "s|{{API_ENDPOINT}}|${{ env.API_ENDPOINT }}|g" ./static-website/index.html
 
       - name: S3 Deployment
