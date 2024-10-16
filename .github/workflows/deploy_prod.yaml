@@ -1,11 +1,15 @@
-name: Full Dev-ployment
+name: Full PRDO deployment
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
 on:
-  push:
-    branches:
-      - dev
+  pull_request:
+    branches: [ "main" ]
+
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   CI:
@@ -20,8 +24,8 @@ jobs:
         # This will help you confirm that the directory structure is as expected
     
       - name: List Env Directory Contents for Debugging
-        run: ls -la ./envs/dev
-        # This will show if the envs/dev directory exists
+        run: ls -la ./envs/prod
+        # This will show if the envs/prod directory exists
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -35,19 +39,19 @@ jobs:
 
       - name: Terraform fmt
         run: terraform fmt --recursive
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
     
       - name: Terraform Init
         run: terraform init
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
     
       - name: Terraform Validate
         run: terraform validate -no-color
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
 
       - name: Terraform Plan
         run: terraform plan
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
 
   CD:
     runs-on: ubuntu-latest
@@ -71,11 +75,11 @@ jobs:
     
       - name: Terraform Init
         run: terraform init 
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
 
       - name: Export Terraform Outputs
         id: tfout
@@ -86,10 +90,11 @@ jobs:
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
           echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_ENV
 
-        working-directory: './envs/dev'
+        working-directory: './envs/prod'
 
       - name: Replace API Endpoint in index.html
-        run: sed -i "s|{{API_ENDPOINT}}|${{ steps.tfout.outputs.API_ENDPOINT }}|g" ./static-website/index.html
+        run: |
+         sed -i "s|{{API_ENDPOINT}}|${{ env.API_ENDPOINT }}|g" ./static-website/index.html
 
       - name: S3 Deployment
         run: aws s3 sync . s3://${{ env.S3_NAME }}
@@ -100,3 +105,4 @@ jobs:
 
       - name: Output CF domain
         run: echo "${{ env.CF_DOMAIN }}"
+
