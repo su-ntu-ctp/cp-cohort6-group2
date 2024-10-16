@@ -68,8 +68,10 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init 
         working-directory: './envs/dev'
+        with:
+          terraform_wrapper: false
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
@@ -80,7 +82,7 @@ jobs:
         shell: bash
         run: |
           terraform output -raw cf_id
-          #echo "CF_ID='$(terraform output -raw cf_id)'" >> $GITHUB_ENV
+          echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_ENV
 
         working-directory: './envs/dev'
 
