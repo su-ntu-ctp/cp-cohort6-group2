@@ -105,4 +105,3 @@ jobs:
 
       - name: Output CF domain
         run: echo "${{ env.CF_DOMAIN }}"
-
