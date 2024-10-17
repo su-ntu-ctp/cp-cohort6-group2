@@ -4,6 +4,7 @@ variable "env" {
 }
 
 variable "aws_region" {
-  type    = string
-  default = "ap-southeast-1" # You can change this default or pass it in via command line
+  description = "The AWS region where resources will be created"
+  type        = string
+  default     = "ap-southeast-1"  
 }

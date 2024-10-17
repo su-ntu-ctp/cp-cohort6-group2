@@ -28,7 +28,6 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      working-directory: './envs/prod' 
 
     - name: Export terraform outputs
       id: tfout
@@ -37,10 +36,10 @@ jobs:
 
     - name: s3 delete files
       run: aws s3 rm s3://${{ env.S3_NAME }} --recursive
-    
+
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
-      working-directory: './envs/prod'
+
 
 
   

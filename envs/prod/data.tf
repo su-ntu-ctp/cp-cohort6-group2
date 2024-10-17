@@ -1,8 +1,3 @@
-# data "aws_route53_zone" "nonprod" {
-#   name = local.zone_name
-# }
-
-
 #===========================================
 # data - Lambda Function for processing orders
 #===========================================
