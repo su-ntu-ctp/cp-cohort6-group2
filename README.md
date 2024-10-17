@@ -9,9 +9,6 @@ Sourced from local farmers in Dandong, our strawberries are celebrated for their
 
 **BerryFresh**, your go-to e-commerce platform dedicated to bringing the finest strawberries from Dandong, China, straight to your door. Our mission is to provide you with fresh, high-quality strawberries that capture the essence of their rich, flavourful heritage.
 
-## Deployment Strategy
-<img width="539" alt="Deployment Strategy" src="https://github.com/user-attachments/assets/b5cb4d68-fe08-4d54-aade-c8fbc8ebcbe0">
-
 ## Cloud Architecture:
 <img width="359" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/85ced634-dfc5-4561-baa5-0ca5310beff5">
 
@@ -43,6 +40,7 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
   - Leverage features like auto-scaling, global tables (if needed for multi-region availability), and DynamoDB Streams for real-time data processing.
 
 ## 2. Deployment Strategy
+<img width="539" alt="Deployment Strategy" src="https://github.com/user-attachments/assets/b5cb4d68-fe08-4d54-aade-c8fbc8ebcbe0">
 
 ### Infrastructure as Code (IaC)
 - Utilize Terraform to define the infrastructure components needed for BerryFresh, including S3 buckets, CloudFront distributions, Lambda functions, and DynamoDB tables.
