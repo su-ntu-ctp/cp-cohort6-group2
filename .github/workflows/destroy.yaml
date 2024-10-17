@@ -5,7 +5,7 @@ on: workflow_dispatch
 env:            
   AWS_REGION: ap-southeast-1  
   CONFIG_DIRECTORY: "envs/dev"
-  
+
 jobs:
   Destroy:
     runs-on: ubuntu-latest
@@ -20,6 +20,12 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Clear Terraform Cache 
+      run: rm -rf .terraform
+      working-directory: './envs/dev'
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
