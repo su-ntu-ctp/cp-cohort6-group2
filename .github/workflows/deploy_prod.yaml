@@ -2,14 +2,14 @@ name: Full PRDO deployment
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
-on:
-  pull_request:
-    branches: [ "main" ]
-
 # on:
-#   push:
-#     branches:
-#       - main
+#   pull_request:
+#     branches: [ "main" ]
+
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   CI:
