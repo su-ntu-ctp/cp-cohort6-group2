@@ -1,11 +1,11 @@
-name: Full Dev-ployment
+name: Full DEV Deployment
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   CI:
