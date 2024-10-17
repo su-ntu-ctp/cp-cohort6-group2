@@ -89,7 +89,7 @@ jobs:
         working-directory: './envs/dev'
 
       - name: Replace API Endpoint in index.html
-        run: sed -i "s|{{API_ENDPOINT}}|${{ steps.tfout.outputs.API_ENDPOINT }}|g" ./static-website/index.html
+        run: sed -i "s|{{API_ENDPOINT}}|${{ env.API_ENDPOINT }}|g" ./static-website/index.html
 
       - name: S3 Deployment
         run: aws s3 sync . s3://${{ env.S3_NAME }}
