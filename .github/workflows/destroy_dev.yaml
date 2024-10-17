@@ -34,9 +34,9 @@ jobs:
       working-directory: './envs/dev' 
         
     - name: Export Terraform Outputs
-        id: tfout
-        shell: bash
-        run: |
+      id: tfout
+      shell: bash
+      run: |
           echo "CF_ID=$(terraform output -raw cf_id)" >> $GITHUB_ENV
           echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
@@ -44,15 +44,15 @@ jobs:
 
         working-directory: './envs/dev'
     - name: Export terraform outputs
-       id: tfout
-       run: |
+      id: tfout
+      run: |
          echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
 
     - name: s3 delete files
-       run: aws s3 rm s3://${{ env.S3_NAME }} --recursive
+      run: aws s3 rm s3://${{ env.S3_NAME }} --recursive
     
     - name: Terraform Destroy
-       run: terraform destroy -auto-approve
+      run: terraform destroy -auto-approve
       working-directory: './envs/dev'
 
 
