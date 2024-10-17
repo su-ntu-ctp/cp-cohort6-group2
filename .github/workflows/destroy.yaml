@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 env:            
   AWS_REGION: ap-southeast-1  
-  CONFIG_DIRECTORY: "envs/dev"
+  CONFIG_DIRECTORY: "./envs/dev"
 
 jobs:
   Destroy:
@@ -25,10 +25,6 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_wrapper: false
-    
-    - name: Clear Terraform Cache 
-      run: rm -rf .terraform
-      working-directory: './envs/dev'
 
     - name: Terraform Init
       run: terraform init
