@@ -32,7 +32,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: './envs/dev' 
-        
+
     - name: Export Terraform Outputs
       id: tfout
       shell: bash
@@ -41,8 +41,8 @@ jobs:
           echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
           echo "CF_DOMAIN=$(terraform output -raw cf_domain)" >> $GITHUB_ENV
           echo "API_ENDPOINT=$(terraform output -raw api_endpoint)" >> $GITHUB_ENV
+      working-directory: './envs/dev'
 
-        working-directory: './envs/dev'
     - name: Export terraform outputs
       id: tfout
       run: |
