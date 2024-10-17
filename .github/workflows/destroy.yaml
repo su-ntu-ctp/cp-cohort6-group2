@@ -24,9 +24,10 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_wrapper: false
-
+        
     - name: Terraform Init
       run: terraform init
+      working-directory: './envs/dev' 
 
     - name: Export terraform outputs
       id: tfout
@@ -38,7 +39,7 @@ jobs:
     
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
-
+      working-directory: './envs/dev'
 
 
   
