@@ -30,13 +30,13 @@ jobs:
       run: terraform init
       working-directory: './envs/dev' 
 
-    - name: Export terraform outputs
-      id: tfout
-      run: |
-        echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
+    # - name: Export terraform outputs
+    #   id: tfout
+    #   run: |
+    #     echo "S3_NAME=$(terraform output -raw bucket_name)" >> $GITHUB_ENV
 
-    - name: s3 delete files
-      run: aws s3 rm s3://${{ env.S3_NAME }} --recursive
+    # - name: s3 delete files
+    #   run: aws s3 rm s3://${{ env.S3_NAME }} --recursive
     
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
