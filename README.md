@@ -62,7 +62,7 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 - **main Branch:**
   - Represents the production-ready state of the application. Only thoroughly tested code is merged here for deployment to the live environment.
 
-- **dev Branch:**
+- **feature Branch:**
   - Serves as the integration branch for ongoing development. New features and bug fixes are merged here for testing before promotion to the main branch.
 
 ## Summary
