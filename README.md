@@ -6,6 +6,16 @@
 3. Tommy Chua
 4. Joanne Wang Baojuan
 5. Ryan Wang Xin
+</ul>
+<p>Students of PaCE@NTU enrolled in the SCTP Cloud Infrastructure Engineering course.</p>
+
+<hr>
+
+<h3>Project Overview</h3>
+<ul>
+    <li><strong>Project Name:</strong> CI/CD Pipeline for Web App Deployment on AWS ECS</li>
+    <li><strong>Repository:</strong> GitHub Repository - [https://github.com/su-ntu-ctp/cp-cohort6-group2]</li>
+</ul>
 
 <hr>
 
