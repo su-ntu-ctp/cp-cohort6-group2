@@ -44,6 +44,53 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 
 ## 1. Architecture Design
 
+<h4>Application Structure</h4>
+<pre>
+/cp-cogort6-group2ce6-capstone-grp1
+|-- .github/workflows
+    |-- deploy_dev.yaml
+    |-- deploy_prod.yaml
+    |-- destroy_dev.yaml
+    |-- destroy_prod.yaml
+|-- .terraform
+    |-- providers/registry.terraform.io/hashicorp
+    |-- terraform.tfstate
+|-- envs
+    |-- dev
+        |-- terraform
+        |-- terraform.lock.hcl
+        |-- backend.tf
+        |-- data.tf
+        |-- main.tf
+        |-- output.tf
+        |-- process_order.zip
+        |-- provider.tf
+        |-- versions.tf
+    |-- prod
+        |-- terraform
+        |-- terraform.lock.hcl
+        |-- backend.tf
+        |-- data.tf
+        |-- main.tf
+        |-- output.tf
+        |-- process_order.zip
+        |-- provider.tf
+        |-- versions.tf
+|-- modules
+        |-- Cloudfront-S3
+        |-- Lambda-DB-API
+|-- static-website
+        |-- images
+        |-- index.html
+|-- .gitignore
+|-- .teraform.lock.hcl
+|-- email_lambda.py
+|-- lambda_function.py
+|-- process_order.zip
+|-- README.md
+|-- send_email.zip
+</pre>
+
 ### Static Content Layer
 - **Amazon S3:**
   - Store all static assets such as product images, stylesheets, JavaScript files, and fonts in S3 buckets
@@ -59,7 +106,7 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 - **AWS Lambda:**
   - Implement serverless functions to handle dynamic operations such as user authentication, shopping cart management, order processing, and payment integration
   - Design functions to scale automatically based on incoming traffic, enabling efficient resource use
-  - lambda_function.py:
+  - process_order_dev - lambda_function.py:
 <pre>
 import json
 import boto3
