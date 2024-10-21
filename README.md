@@ -1,5 +1,12 @@
 # CapstoneProject-DevOps-CICDpipeline Group 2
 
+## Team Member:
+1. Aldin Dela Cruz
+2. Benjamin Paton
+3. Tommy Chua
+4. Joanne Wang Baojuan
+5. Ryan Wang Xin
+
 # E-commerce Company— BerryFresh
 
 BerryFresh is Your Online Destination for Premium Strawberries From Dandong. With the 
@@ -57,15 +64,26 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 ## 4. Security and Compliance
 - **IAM Roles and Policies:**
   - Define specific IAM roles and policies to grant least privilege access to services and resources, ensuring that only authorized components can access sensitive data.
+- **RULESET/ Require Pull Request:**
+
 
 ## 5. Branching Strategy
 - **main Branch:**
   - Represents the production-ready state of the application. Only thoroughly tested code is merged here for deployment to the live environment.
 
 - **feature Branch:**
-  - Serves as the integration branch for ongoing development. New features and bug fixes are merged here for testing before promotion to the main branch.
+  - Serves as the integration branch for ongoing development. New features and bug fixes are ![Uploading Ruleset1.png…]()
+merged here for testing before promotion to the main branch.
+
+## 6. Static Website: Order Received
+<img width="587" alt="Website_Order Received " src="![Uploading Ruleset1.png…]()
+https://github.com/user-attachments/assets/3f772810-2f31-427d-9b8e-01b6275108fb">
+![Uploading Ruleset1.png…]()
+
 
 ## Summary
 This DevOps strategy for BerryFresh leverages AWS services to build a resilient, scalable, and efficient e-commerce platform. By effectively integrating static and dynamic content layers, and employing best practices in monitoring, security, and CI/CD, BerryFresh can deliver a seamless shopping experience to its customers while maintaining rapid deployment cycles. This approach not only enhances performance but also fosters a culture of continuous improvement and innovation.
+
+
 
 
