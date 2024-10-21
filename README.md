@@ -46,24 +46,102 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 
 ### Static Content Layer
 - **Amazon S3:**
-  - Store all static assets such as product images, stylesheets, JavaScript files, and fonts in S3 buckets.
-  - Enable versioning and lifecycle policies to manage content effectively and reduce costs.
-  - Use S3 bucket policies to control access and ensure security.
+  - Store all static assets such as product images, stylesheets, JavaScript files, and fonts in S3 buckets
+  - Enable versioning and lifecycle policies to manage content effectively and reduce costs
+  - Use S3 bucket policies to control access and ensure security
 
 - **Amazon CloudFront:**
-  - Distribute static assets globally via CloudFront, reducing latency for users regardless of their location.
-  - Configure caching policies to optimize content delivery, setting TTL values based on the frequency of updates.
-  - Utilize SSL to secure the delivery of content and ensure customer trust.
+  - Distribute static assets globally via CloudFront, reducing latency for users regardless of their location
+  - Configure caching policies to optimize content delivery, setting TTL values based on the frequency of updates
+  - Utilize SSL to secure the delivery of content and ensure customer trust
 
 ### Dynamic Content Layer
 - **AWS Lambda:**
-  - Implement serverless functions to handle dynamic operations such as user authentication, shopping cart management, order processing, and payment integration.
-  - Design functions to scale automatically based on incoming traffic, enabling efficient resource use.
+  - Implement serverless functions to handle dynamic operations such as user authentication, shopping cart management, order processing, and payment integration
+  - Design functions to scale automatically based on incoming traffic, enabling efficient resource use
+  - lambda_function.py:
+<pre>
+import json
+import boto3
+import os
+
+# Initialize the DynamoDB client
+dynamodb = boto3.client('dynamodb')
+
+# Get the DynamoDB table name from environment variables
+table_name = os.environ['DYNAMODB_TABLE']
+
+def lambda_handler(event, context):
+    try:
+        # Get JSON payload from the event
+        json_payload = event.get('body')
+        if json_payload is None:
+            return {
+                'statusCode': 400,
+                'body': json.dumps("No payload provided.")
+            }
+        
+        payload = json.loads(json_payload)
+        
+        # Validate required fields
+        required_fields = ['order_id', 'fruit', 'quantity']
+        for field in required_fields:
+            if field not in payload:
+                return {
+                    'statusCode': 400,
+                    'body': json.dumps(f"Missing required field: {field}")
+                }
+        
+        # Extract order details
+        order_id = payload.get('order_id')
+        fruit = payload.get('fruit')
+        quantity = payload.get('quantity')
+        
+        # Ensure order_id is not None
+        if order_id is None:
+            return {
+                'statusCode': 400,
+                'body': json.dumps("Missing required field: order_id")
+            }
+
+        # Define the item to be stored in DynamoDB
+        item = {
+            'order_id': {'S': order_id},
+            'fruit': {'S': fruit},
+            'quantity': {'N': str(quantity)}
+        }
+
+        # Put the item in the DynamoDB table
+        dynamodb.put_item(TableName=table_name, Item=item)
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps(f"Order {order_id} processed successfully!"),
+            'headers': {
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': '*'
+            }  
+        }
+
+    except json.JSONDecodeError:
+        return {
+            'statusCode': 400,
+            'body': json.dumps("Invalid JSON payload.")
+        }
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps("An internal error occurred.")
+        }
+</pre>
 
 - **Amazon DynamoDB:**
   - Use DynamoDB as the primary database for dynamic content such as product listings, user profiles, and order histories.
   - Leverage features like auto-scaling, global tables (if needed for multi-region availability), and DynamoDB Streams for real-time data processing.
-
+</pre>
+    
 <hr>
 
 ## 2. Deployment Strategy
