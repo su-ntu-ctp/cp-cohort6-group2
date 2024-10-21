@@ -40,6 +40,8 @@ Sourced from local farmers in Dandong, our strawberries are celebrated for their
 ## Objective
 To create a high-performance, scalable, and reliable e-commerce platform that delivers an exceptional user experience through efficient content delivery and rapid feature deployment.
 
+<hr>
+
 ## 1. Architecture Design
 
 ### Static Content Layer
@@ -76,10 +78,14 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 ### CI/CD Pipeline
 - Implement a CI/CD pipeline using GitHub Actions to automate the build, test, and deployment processes.
 
+<hr>
+
 ## 3. Monitoring and Logging
 - **AWS CloudWatch:**
   - Monitor key metrics such as Lambda invocation counts, DynamoDB read/write capacities, and CloudFront cache hit ratios.
   - Set up alarms to notify the team of any anomalies, such as increased error rates or latency issues.
+
+<hr>
 
 ## 4. Security and Compliance
 - **IAM Roles and Policies:**
@@ -89,6 +95,8 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 <img width="536" alt="Ruleset1" src="https://github.com/user-attachments/assets/aa662413-f0a3-47c0-ae4c-53713c62b19a">
 <img width="545" alt="Ruleset2" src="https://github.com/user-attachments/assets/14dffdac-7fd3-489d-a1b9-3263ccf640a6">
 </pre>
+
+<hr>
   
 ## 5. Branching Strategy
 - **main Branch:**
@@ -98,15 +106,21 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
   - Serves as the integration branch for ongoing development. New features and bug fixes are ![Uploading Ruleset1.png…]()
 merged here for testing before promotion to the main branch.
 
+<hr>
+
 ## 6. Github Workflow
 <pre>
 <img width="928" alt="Github Workflow" src="https://github.com/user-attachments/assets/8d92cbfa-5b2b-4249-bc51-5105c982b615">
 </pre>
 
+<hr>
+
 ## 7. Static Website - Order Received
 <pre>
 <img width="587" alt="Website_Order Received " src="https://github.com/user-attachments/assets/1992758e-ad05-434a-b884-7dbc638c6533">
 </pre>
+
+<hr>
 
 ## 7. DynamoDB Table
 <pre>
