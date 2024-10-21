@@ -7,6 +7,8 @@
 4. Joanne Wang Baojuan
 5. Ryan Wang Xin
 
+<hr>
+
 # E-commerce Company— BerryFresh
 
 BerryFresh is Your Online Destination for Premium Strawberries From Dandong. With the 
@@ -15,6 +17,8 @@ inherent advantages of being located in an internationally recognized high-quali
 Sourced from local farmers in Dandong, our strawberries are celebrated for their exceptional sweetness and juicy texture. Grown in the region’s ideal climate and fertile soil, these strawberries are harvested at peak ripeness, ensuring you enjoy the freshest and tastiest fruit.
 
 **BerryFresh**, your go-to e-commerce platform dedicated to bringing the finest strawberries from Dandong, China, straight to your door. Our mission is to provide you with fresh, high-quality strawberries that capture the essence of their rich, flavourful heritage.
+
+<hr>
 
 ## Cloud Architecture:
 <img width="359" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/85ced634-dfc5-4561-baa5-0ca5310beff5">
@@ -45,6 +49,8 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 - **Amazon DynamoDB:**
   - Use DynamoDB as the primary database for dynamic content such as product listings, user profiles, and order histories.
   - Leverage features like auto-scaling, global tables (if needed for multi-region availability), and DynamoDB Streams for real-time data processing.
+
+<hr>
 
 ## 2. Deployment Strategy
 <img width="539" alt="Deployment Strategy" src="https://github.com/user-attachments/assets/b5cb4d68-fe08-4d54-aade-c8fbc8ebcbe0">
@@ -79,6 +85,7 @@ merged here for testing before promotion to the main branch.
 ## 6. Static Website: Order Received
 <img width="587" alt="Website_Order Received " src="https://github.com/user-attachments/assets/1992758e-ad05-434a-b884-7dbc638c6533">
 
+<hr>
 
 ## Summary
 This DevOps strategy for BerryFresh leverages AWS services to build a resilient, scalable, and efficient e-commerce platform. By effectively integrating static and dynamic content layers, and employing best practices in monitoring, security, and CI/CD, BerryFresh can deliver a seamless shopping experience to its customers while maintaining rapid deployment cycles. This approach not only enhances performance but also fosters a culture of continuous improvement and innovation.
