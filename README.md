@@ -98,17 +98,17 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
   - Serves as the integration branch for ongoing development. New features and bug fixes are ![Uploading Ruleset1.png…]()
 merged here for testing before promotion to the main branch.
 
-**6. Github Workflow:**
+## 6. Github Workflow
 <pre>
 <img width="928" alt="Github Workflow" src="https://github.com/user-attachments/assets/8d92cbfa-5b2b-4249-bc51-5105c982b615">
 </pre>
 
-**7. Static Website: Order Received**
+## 7. Static Website - Order Received
 <pre>
 <img width="587" alt="Website_Order Received " src="https://github.com/user-attachments/assets/1992758e-ad05-434a-b884-7dbc638c6533">
 </pre>
 
-**8. DynamoDB - Table**
+## 7. DynamoDB Table
 <pre>
 <img width="943" alt="DynamoDB" src="https://github.com/user-attachments/assets/d2fe398f-d5b7-4545-bdc3-4ff13ff858d3">
 </pre>
