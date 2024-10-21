@@ -21,6 +21,7 @@ Sourced from local farmers in Dandong, our strawberries are celebrated for their
 <hr>
 
 ## Cloud Architecture:
+<pre>
 <img width="359" alt="Cloud Architecture 2" src="https://github.com/user-attachments/assets/85ced634-dfc5-4561-baa5-0ca5310beff5">
 
 # DevOps Strategy for BerryFresh
@@ -53,6 +54,7 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 <hr>
 
 ## 2. Deployment Strategy
+<pre>
 <img width="539" alt="Deployment Strategy" src="https://github.com/user-attachments/assets/b5cb4d68-fe08-4d54-aade-c8fbc8ebcbe0">
 
 ### Infrastructure as Code (IaC)
@@ -71,6 +73,7 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 - **IAM Roles and Policies:**
   - Define specific IAM roles and policies to grant least privilege access to services and resources, ensuring that only authorized components can access sensitive data.
 - **RULESET/ Require Pull Request:**
+<pre>
 <img width="536" alt="Ruleset1" src="https://github.com/user-attachments/assets/aa662413-f0a3-47c0-ae4c-53713c62b19a">
 <img width="545" alt="Ruleset2" src="https://github.com/user-attachments/assets/14dffdac-7fd3-489d-a1b9-3263ccf640a6">
 
@@ -83,6 +86,7 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 merged here for testing before promotion to the main branch.
 
 ## 6. Static Website: Order Received
+<pre>
 <img width="587" alt="Website_Order Received " src="https://github.com/user-attachments/assets/1992758e-ad05-434a-b884-7dbc638c6533">
 
 <hr>
