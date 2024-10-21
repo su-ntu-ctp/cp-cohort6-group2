@@ -65,7 +65,8 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 - **IAM Roles and Policies:**
   - Define specific IAM roles and policies to grant least privilege access to services and resources, ensuring that only authorized components can access sensitive data.
 - **RULESET/ Require Pull Request:**
-
+<img width="536" alt="Ruleset1" src="https://github.com/user-attachments/assets/aa662413-f0a3-47c0-ae4c-53713c62b19a">
+<img width="545" alt="Ruleset2" src="https://github.com/user-attachments/assets/14dffdac-7fd3-489d-a1b9-3263ccf640a6">
 
 ## 5. Branching Strategy
 - **main Branch:**
@@ -76,13 +77,12 @@ To create a high-performance, scalable, and reliable e-commerce platform that de
 merged here for testing before promotion to the main branch.
 
 ## 6. Static Website: Order Received
-<img width="587" alt="Website_Order Received " src="![Uploading Ruleset1.png…]()
-https://github.com/user-attachments/assets/3f772810-2f31-427d-9b8e-01b6275108fb">
-![Uploading Ruleset1.png…]()
+<img width="587" alt="Website_Order Received " src="https://github.com/user-attachments/assets/1992758e-ad05-434a-b884-7dbc638c6533">
 
 
 ## Summary
 This DevOps strategy for BerryFresh leverages AWS services to build a resilient, scalable, and efficient e-commerce platform. By effectively integrating static and dynamic content layers, and employing best practices in monitoring, security, and CI/CD, BerryFresh can deliver a seamless shopping experience to its customers while maintaining rapid deployment cycles. This approach not only enhances performance but also fosters a culture of continuous improvement and innovation.
+
 
 
 
